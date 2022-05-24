@@ -3,7 +3,7 @@
 ### Preview
 
 <figure>
-<img src="screenshot.png" width="500">
+<img src="./screenshot.png" width="500">
 <figcaption>Preview of the application viewed in the browser</figcaption>
 </figure>
 
