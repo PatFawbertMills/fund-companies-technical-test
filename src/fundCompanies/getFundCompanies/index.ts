@@ -1,0 +1,1 @@
+export { getFundCompanies } from "./getFundCompanies";
