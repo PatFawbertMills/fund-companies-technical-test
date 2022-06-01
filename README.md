@@ -1,5 +1,11 @@
 # "Golden Gadgets" - Technical Test
 
+The task was to take the given data file (data.json) and determine how much of a fund is invested in each company. Particularly 'Golden Gadgets'. 
+
+The obvious challenge here was that funds can consist of other funds. Also, in theory, a fund could have an infinate nesting if one fund in the hierarchy contained a ancestor fund. Finally, the 'weighting' of the fund is a ratio of the overall value of the fund, so this needs to be taken into account when calculating the share of a company.
+
+The UI was not part of the test, so I have intentionally gone very basic.
+
 ### Preview
 
 <figure>
