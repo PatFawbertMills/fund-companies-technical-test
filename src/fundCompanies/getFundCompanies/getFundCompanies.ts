@@ -15,6 +15,12 @@ export const getFundCompanies = (fundName: string, data = RAW_DATA) => {
   const mainFund = find(fundData, { name: fundName });
   if (!mainFund) return [];
 
+  /*
+    Contrasting the two approaches below:
+    - Variable assignments: traditional pattern, requires declaring potentially many variables. Arguable more readable?
+    - Function composition: created as a single expressions "And coding with expressions is the heart of functional programming."
+  */
+
   // Weight can be assumed as 1 for the top level fund, 1 being 100% of the fund
   // const companyHoldings = filterCompanies(fundData, 1, mainFund.holdings);
 
@@ -22,7 +28,7 @@ export const getFundCompanies = (fundName: string, data = RAW_DATA) => {
   // const filteredCompanies = dedupeCompanies(companyHoldings);
   // return filteredCompanies;
 
-  // I wanted to try an implementation of 'Function Composition'
+  // An implementation of 'Function Composition'
   const processCompanies = flow(filterCompanies, dedupeCompanies);
   return processCompanies(fundData, 1, mainFund.holdings, [fundName]);
 };

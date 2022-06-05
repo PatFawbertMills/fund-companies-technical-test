@@ -6,7 +6,7 @@ import { IHolding, IFund } from "../types";
  * @param collection our dataset
  * @param weight the ratio to apply to each fund or company's share of the overall fund value
  * @param fundContents the contents of the fund, this could be companies or nested funds
- * @param fundNames the collection of funds we have already iterated over, to ensure we don't duplicate funds more than once. Include funds if you want them to be ignored
+ * @param fundNames the collection of funds we have already iterated over, to ensure we don't fall into an infinite loop. Include any funds you want to be ignored
 */
 export const filterCompanies = (collection: IFund[], weight: number = 1, fundContents: IHolding[], fundNames: string[] = []): IHolding[] => {
   let companies = [];
@@ -14,17 +14,17 @@ export const filterCompanies = (collection: IFund[], weight: number = 1, fundCon
     const holding = fundContents[i];
     // Would prefer to use a flag in the data to determine the type of holding but the test data is patchy
     if (holding.name.startsWith("Fund")) {
-      // is our holding already in our collection?
+      // is our holding already in our collection? If so, avoid the infinite loop and return
       if(fundNames.includes(holding.name)) {
         return [];
       }
-      // Ensure we have the fund data
+      // Ensure we can find the fund in our dataset
       const fund = find(collection, { name: holding.name });
       if (!fund) return [];
       /* 
       Important: 
-        1. The weight is relative to the weight of the parent holding
-        2. The fundNames is only relevant within the context of the top level holding iterating through it's children, this is to 
+        1. The weight is relative to the weight of the parent holding (a ratio)
+        2. The fundNames are only relevant within the context of the top level holding iterating through it's children, this is to 
            prevent infinite nesting, e.g. B within C and then C within B
       */
       companies.push(...filterCompanies(collection, holding.weight * weight, fund.holdings, [...fundNames, holding.name]));

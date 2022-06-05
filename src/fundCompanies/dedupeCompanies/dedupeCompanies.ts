@@ -7,6 +7,7 @@ export const dedupeCompanies = (companies: IHolding[]): IHolding[] => {
     if (index === -1) {
       return uniqueCompanies.concat([current]);
     } else {
+      // If we have a record of the company, sum the weights together
       uniqueCompanies[index].weight += current.weight;
       return uniqueCompanies;
     }
